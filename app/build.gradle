@@ -1,0 +1,76 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.ys_production.unsplashapi'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.ys_production.unsplashapi"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // gpt implementation
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+
+    // Litho
+//    implementation 'com.facebook.litho:litho-core:0.47.0'
+//    implementation 'com.facebook.litho:litho-widget:0.47.0'
+//    kapt 'com.facebook.litho:litho-processor:0.47.0'
+
+    // SoLoader
+//    implementation 'com.facebook.soloader:soloader:0.10.5'
+
+    // For integration with Fresco
+    implementation 'com.facebook.fresco:nativeimagetranscoder:2.6.0'
+    implementation 'com.facebook.fresco:fresco:2.6.0'
+//    implementation('com.facebook.fresco:nativeimagetranscoder3:3.0.0')
+//            {
+//        exclude group: 'com.facebook.soloader', module: 'soloader'
+//        exclude group: 'com.facebook.fresco', module: 'soloader'
+//        exclude group: 'com.facebook.fresco', module: 'nativeimagefilters'
+//        exclude group: 'com.facebook.fresco', module: 'nativeimagetranscoder'
+//        exclude group: 'com.facebook.fresco', module: 'memory-type-native'
+//        exclude group: 'com.facebook.fresco', module: 'imagepipeline-native'
+//    }
+    //Blur view
+    implementation 'com.github.Dimezis:BlurView:version-2.0.3'
+
+
+}
