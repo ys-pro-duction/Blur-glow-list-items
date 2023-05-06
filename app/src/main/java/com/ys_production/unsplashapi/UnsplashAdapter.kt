@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.common.executors.CallerThreadExecutor
@@ -53,7 +54,7 @@ class UnsplashAdapter(private val context: Context, private val photos: List<Uns
                 val handler = Handler(Looper.getMainLooper())
 
                 Thread {
-                    val drawable = loadBlur(holder.imageBack, bitmap)
+                    val drawable = loadBlur(holder.imageView, bitmap)
                     drawable?.let {
 //                        if (holder.oldPosition == holder.adapterPosition){
                         if (oldPosition == holder.layoutPosition)
@@ -84,19 +85,53 @@ class UnsplashAdapter(private val context: Context, private val photos: List<Uns
 
     private fun loadBlur(view: View, bitmap: Bitmap?): Drawable? {
         bitmap?.let {bit->
-                val blurBitmap = BlurShadowProvider(view.context).getBlurShadow(bit, 60F)
+                val blurBitmap = BlurShadowProvider(view.context).getBlurShadow(getSqureBitmap(bit), 40F)
+//                val blurBitmap = getBitmapFromView(view)?.let {
+//                    BlurShadowProvider(view.context).getBlurShadow(
+//                        it, 60F)
+//                }
                 val d: Drawable = BitmapDrawable(view.resources,blurBitmap)
             return d
         }
         return null
     }
+    private fun getSqureBitmap(srcBmp: Bitmap):Bitmap{
+        val dstBmp:Bitmap
+        if (srcBmp.width >= srcBmp.height){
+
+            dstBmp = Bitmap.createBitmap(
+                srcBmp,
+                srcBmp.width /2 - srcBmp.height /2,
+                0,
+                srcBmp.height,
+                srcBmp.height
+            );
+
+        }else{
+
+            dstBmp = Bitmap.createBitmap(
+                srcBmp,
+                0,
+                srcBmp.height /2 - srcBmp.width /2,
+                srcBmp.width,
+                srcBmp.width
+            );
+        }
+        return dstBmp
+    }
     fun getBitmapFromView(view: View): Bitmap? {
-        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(returnedBitmap)
-        val bgDrawable = view.background
-        if (bgDrawable != null) bgDrawable.draw(canvas) else canvas.drawColor(Color.WHITE)
-        view.draw(canvas)
-        return returnedBitmap
+        return try {
+            val returnedBitmap =
+                Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(returnedBitmap)
+            val bgDrawable = view.background
+            if (bgDrawable != null) bgDrawable.draw(canvas) else canvas.drawColor(Color.WHITE)
+            view.draw(canvas)
+            returnedBitmap
+        }catch (e: Exception){
+            e.printStackTrace()
+            null
+        }
     }
     override fun getItemCount(): Int {
         return photos.size
@@ -105,6 +140,7 @@ class UnsplashAdapter(private val context: Context, private val photos: List<Uns
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: SimpleDraweeView = itemView.findViewById(R.id.item_image)
         val imageBack: ConstraintLayout = itemView.findViewById(R.id.mainBack)
+        val imageCard: CardView = itemView.findViewById(R.id.image_card)
         fun getAnimation(): Animation? {
             return AnimationUtils.loadAnimation(imageBack.context, R.anim.alpha_0to1)
         }
