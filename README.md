@@ -1,3 +1,4 @@
 # Blur-glow-list-items
 in this repo we testing how to implement view glow in recyclerview smoothly
-![Screenshot_20230505_204731](https://user-images.githubusercontent.com/71577899/236499183-d519579c-db37-4ca1-8751-7baf622580c5.png)
+![Screenshot_20230506_101405](https://user-images.githubusercontent.com/71577899/236600754-45852760-b3d1-43e1-b5e1-035b9b793e97.png)
+
